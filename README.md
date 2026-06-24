@@ -1,4 +1,4 @@
-# powershell-node-image
+# powershell-node
 
 PowerShell 7.4 Ubuntu 22.04 base image with Node.js 24 installed.
 
@@ -6,8 +6,8 @@ PowerShell 7.4 Ubuntu 22.04 base image with Node.js 24 installed.
 
 - Repository: `junglesub/powershell-node-image`
 - Base image: `mcr.microsoft.com/powershell:7.4-ubuntu-22.04`
-- Published image: `ghcr.io/junglesub/powershell-node-image:pwsh7.4-node24`
-- Extra immutable tag: `ghcr.io/junglesub/powershell-node-image:<commit-sha>`
+- Published image: `ghcr.io/junglesub/powershell-node:pwsh7.4-node24`
+- Extra immutable tag: `ghcr.io/junglesub/powershell-node:<commit-sha>`
 - Platforms: `linux/amd64`, `linux/arm64`
 
 The GitHub Actions workflow derives the GHCR owner from built-in GitHub variables and publishes with the repository image name, so no repository URL or custom secret is required.
@@ -49,8 +49,8 @@ The workflow builds architecture-specific images in parallel with a matrix:
 
 After both architecture images are pushed with temporary suffix tags, the publish job creates the final multi-arch GHCR manifest tags:
 
-- `ghcr.io/junglesub/powershell-node-image:pwsh7.4-node24`
-- `ghcr.io/junglesub/powershell-node-image:<commit-sha>`
+- `ghcr.io/junglesub/powershell-node:pwsh7.4-node24`
+- `ghcr.io/junglesub/powershell-node:<commit-sha>`
 
 ## Local Note
 

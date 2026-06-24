@@ -1,4 +1,4 @@
-name: Publish powershell-node-image
+name: Publish powershell-node
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ permissions:
   packages: write
 
 env:
-  IMAGE_BASENAME: powershell-node-image
+  IMAGE_BASENAME: powershell-node
   IMAGE_TAG: pwsh7.4-node24
   NODE_VERSION: 24.0.0
   POWERSHELL_VERSION: 7.4.6
