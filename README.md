@@ -26,7 +26,7 @@ Required repository setting:
 
 ## Contents
 
-The Dockerfile installs Node.js from the official Node.js Linux tarball and verifies the downloaded archive with `SHASUMS256.txt`. The default build argument is:
+The Dockerfile installs Node.js from the official Node.js Linux tarball and verifies the downloaded archive with `SHASUMS256.txt`. It also keeps `libc6` installed so the official Node.js binaries have the glibc dynamic loader they need on both `amd64` and `arm64`. The default build argument is:
 
 ```text
 NODE_VERSION=24.0.0
