@@ -1,0 +1,65 @@
+name: Publish powershell-node
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - Dockerfile
+      - .github/workflows/publish-powershell-node.yml
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_BASENAME: powershell-node
+  IMAGE_TAG: pwsh7.4-node24
+  NODE_VERSION: 24.0.0
+
+jobs:
+  publish:
+    name: Build and publish GHCR image
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare image name
+        id: image
+        shell: bash
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          echo "name=ghcr.io/${owner}/${IMAGE_BASENAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          build-args: |
+            NODE_VERSION=${{ env.NODE_VERSION }}
+          tags: |
+            ${{ steps.image.outputs.name }}:${{ env.IMAGE_TAG }}
+            ${{ steps.image.outputs.name }}:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.description=PowerShell 7.4 on Ubuntu 22.04 with Node.js 24
+            org.opencontainers.image.version=${{ env.IMAGE_TAG }}
