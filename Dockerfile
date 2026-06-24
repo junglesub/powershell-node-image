@@ -9,7 +9,7 @@ RUN set -eux; \
     case "${TARGETARCH:-amd64}" in \
       amd64) node_arch="x64" ;; \
       arm64) node_arch="arm64" ;; \
-      *) echo "Unsupported TARGETARCH: ${TARGETARCH}" >&2; exit 1 ;; \
+      *) echo "Unsupported TARGETARCH: ${TARGETARCH}. The selected PowerShell base image is published here as an amd64 rootfs." >&2; exit 1 ;; \
     esac; \
     apt-get update; \
     apt-get install -y --no-install-recommends ca-certificates curl libc6 xz-utils; \
